@@ -1,0 +1,11 @@
+{
+  "ollama_url": "http://localhost:11434/api/generate",
+  "model": "mistral",
+  "ollama_timeout_s": 25,
+  "ollama_retries": 2,
+  "memory_path": "data/memory.json",
+  "stt_engine": "vosk",
+  "vosk_model_path": "models/vosk-model-small-en-us-0.15",
+  "tts_rate": 180,
+  "prompt_mode": "stark_default"
+}
