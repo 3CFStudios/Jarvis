@@ -1,0 +1,125 @@
+# Jarvis (Windows 11 Local Voice Assistant)
+
+Jarvis is a modular two-layer voice assistant for Python 3.11:
+- **Brain (Planner):** Mistral-based JSON-only planner.
+- **Executor:** strict validator + allowlisted action runtime with confirmation gates.
+- **UI:** dark-theme Chat UI with input box, conversation log, and watermark.
+
+## 1) Setup (Python 3.11)
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+## 2) Playwright install
+
+```bash
+playwright install chromium
+```
+
+## 3) Ollama install + model pull (default backend)
+
+1. Install Ollama from official installer.
+2. Start Ollama service.
+3. Pull Mistral model:
+
+```bash
+ollama pull mistral
+```
+
+Jarvis default config points to:
+`http://localhost:11434/api/chat`
+
+## 4) Mistral Cloud backend
+
+Set `llm.backend: mistral_cloud` in `config.yaml` and export your API key:
+
+```bash
+setx MISTRAL_API_KEY "your_key_here"
+```
+
+## 5) Run Jarvis
+
+```bash
+python main.py
+```
+
+## Chat UI
+
+- Tkinter chat window with:
+  - conversation log (scrolled text)
+  - input text box
+  - Send button
+  - Enter-to-send
+- Dark theme and persistent bottom-right watermark (`Arya VL`).
+- User message appears immediately; plan and execution happen in worker threads to keep UI responsive.
+- Jarvis displays reply text for debug visibility and speaks responses via TTS.
+
+## Speech and input modes
+
+- **Primary output:** TTS (`pyttsx3`) using `plan.say`.
+- If `plan.say` is empty/whitespace, nothing is spoken.
+- Push-to-talk hotkey (default `F9`) captures speech, transcribes, and submits into the same chat pipeline.
+- Wake-word dependencies are included; you can extend `AudioEngine`/main loop for always-on wake listening if needed.
+
+## Personality mode switching
+
+Exact command phrases (typed or transcribed) are intercepted locally:
+- `Activate Dark Mode`
+- `Activate Prime Mode`
+- `Activate Lock-In`
+- `Activate Unhinged Mode`
+
+Behavior:
+1. Planner mode updates immediately.
+2. Mode is persisted in memory (`persona_mode`).
+3. Jarvis confirms by speaking `Mode set to X`.
+4. No planner request is made for these commands.
+
+Persona only affects language tone in planner `say` fields; safety rules and allowlists remain unchanged.
+
+## Confirmation system (critical safety)
+
+For EXTERNAL/irreversible actions, plans must include:
+- `require_confirmation`
+- `WAIT_CONFIRMATION`
+- explicit finalize action (`*_finalize_*`)
+
+Executor blocks finalize actions without a confirmation gate.
+
+## Kill switch
+
+- Global hotkey: `F12`
+- Immediately sets STOP_EVENT, aborts execution, cancels confirmation wait.
+- UI status updates to `ABORTED` and TTS says `Stopped.`
+
+## Watermarking
+
+Watermark text comes from `config.yaml` and is shown on the chat UI.
+
+## Memory
+
+Local persistent memory supports:
+- contact aliases
+- exports folder
+- caption template
+- persona mode preference
+
+## Adding skills
+
+1. Add a new file under `skills/` with a callable.
+2. Register it in `main.py` `action_registry`.
+3. Add action name to executor allowlist in `core/executor.py`.
+4. In planner prompt/design, ensure action is only planned when safe.
+
+## Logs
+
+Rotating logs are written to `logs/jarvis.log` with:
+- timestamp
+- skill/action name
+- confirmation events
+- errors
+
+No stealth or hidden logging is implemented.

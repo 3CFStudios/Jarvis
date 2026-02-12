@@ -1,0 +1,14 @@
+PyYAML==6.0.2
+requests==2.32.3
+pydantic==2.10.6
+keyboard==0.13.5
+pyttsx3==2.98
+faster-whisper==1.1.1
+vosk==0.3.45
+sounddevice==0.5.1
+numpy==2.2.3
+openwakeword==0.6.0
+playwright==1.50.0
+pygetwindow==0.0.9
+pyautogui==0.9.54
+Pillow==11.1.0
