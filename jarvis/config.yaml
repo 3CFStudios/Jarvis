@@ -1,0 +1,39 @@
+assistant:
+  wake_word_enabled: true
+  wake_word_phrase: "jarvis"
+  ptt_hotkey: "F9"
+  kill_hotkey: "F12"
+  min_record_seconds: 3
+  max_record_seconds: 7
+
+persona:
+  mode: "LOCKIN"
+
+llm:
+  backend: "ollama"
+  model: "mistral"
+  ollama_url: "http://localhost:11434/api/chat"
+  mistral_api_key_env: "MISTRAL_API_KEY"
+  mistral_api_url: "https://api.mistral.ai/v1/chat/completions"
+  timeout_seconds: 30
+
+watermark:
+  text: "Arya VL"
+  pattern_enabled: true
+  corner_enabled: true
+  angle_deg: 28
+  spacing_px: 170
+
+automation:
+  browser: "chromium"
+  headless: false
+
+memory:
+  backend: "sqlite"
+  sqlite_path: "jarvis_memory.db"
+
+logging:
+  level: "INFO"
+  path: "logs/jarvis.log"
+  max_bytes: 1048576
+  backup_count: 5
