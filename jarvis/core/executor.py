@@ -62,6 +62,12 @@ class Executor:
         self.logger = logger
         self.action_registry = action_registry
 
+<<<<<<< codex/build-advanced-local-voice-assistant-jarvis-jbsk9b
+    def execute(self, plan: Plan) -> None:
+        self.execute_plan(plan)
+
+=======
+>>>>>>> main
     def execute_plan(self, plan: Plan) -> None:
         self._validate_plan_permissions(plan)
         with sync_playwright() as playwright:
