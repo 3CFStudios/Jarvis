@@ -9,7 +9,9 @@ from .llm_client import LLMClient
 
 
 class Step(BaseModel):
+    name: str = ""
     action: str
+    instruction: str = ""
     args: dict[str, Any] = Field(default_factory=dict)
 
 
@@ -18,12 +20,25 @@ class Preview(BaseModel):
     channel: str
     message: str
     attachments: list[str] = Field(default_factory=list)
-    final_action: Literal["none", "send", "post", "upload", "submit"]
+    final_action: Literal[
+        "none",
+        "send",
+        "post",
+        "upload",
+        "submit",
+        "execute",
+        "complete",
+        "respond",
+        "perform",
+    ]
+    steps: list[str] = Field(default_factory=list)
 
 
 class OnError(BaseModel):
     say: str
     safe_fallback_steps: list[dict[str, Any]] = Field(default_factory=list)
+    require_confirmation: bool = False
+    wait_confirmation: bool = False
 
 
 class Plan(BaseModel):
@@ -57,7 +72,8 @@ class Planner:
             "You are planner-only and never execute actions. "
             "Use risk=EXTERNAL for irreversible/external actions and include require_confirmation "
             "and WAIT_CONFIRMATION steps before finalize actions. "
-            "Allowed final action values: none|send|post|upload|submit. "
+            "Allowed final action values: none|send|post|upload|submit|execute|complete|respond|perform. "
+            "Each step should include name, action, and instruction; args are optional. "
             f"Persona mode is {persona_mode}: {persona_description}. "
             "Persona only affects the tone of say and on_error.say; safety rules never change."
         )
