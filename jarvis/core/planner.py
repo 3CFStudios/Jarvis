@@ -6,7 +6,6 @@ from typing import Any, Literal
 from pydantic import BaseModel, Field, ValidationError
 
 from .llm_client import LLMClient
-from .persona import PersonaManager
 
 
 class Step(BaseModel):
@@ -36,19 +35,10 @@ class Plan(BaseModel):
 
 
 class Planner:
-    def __init__(self, llm_client: LLMClient, persona_manager: PersonaManager) -> None:
+    def __init__(self, llm_client: LLMClient) -> None:
         self.llm_client = llm_client
-        self.persona_manager = persona_manager
 
-    def set_mode(self, mode: str) -> None:
-        self.persona_manager.set_mode(mode)
-
-    def get_mode(self) -> str:
-        return self.persona_manager.get_mode()
-
-    def plan(self, user_input: str) -> Plan:
-        persona_mode = self.persona_manager.get_mode()
-        persona_description = self.persona_manager.get_description()
+    def build_plan(self, user_input: str, persona_mode: str, persona_description: str) -> Plan:
         messages = [
             {"role": "system", "content": self._system_prompt(persona_mode, persona_description)},
             {"role": "user", "content": user_input},
