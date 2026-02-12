@@ -3,10 +3,7 @@
 Jarvis is a modular two-layer voice assistant for Python 3.11:
 - **Brain (Planner):** Mistral-based JSON-only planner.
 - **Executor:** strict validator + allowlisted action runtime with confirmation gates.
-<<<<<<< codex/build-advanced-local-voice-assistant-jarvis-jbsk9b
 - **UI:** dark-theme Chat UI with input box, conversation log, and watermark.
-=======
->>>>>>> main
 
 ## 1) Setup (Python 3.11)
 
@@ -49,7 +46,6 @@ setx MISTRAL_API_KEY "your_key_here"
 python main.py
 ```
 
-<<<<<<< codex/build-advanced-local-voice-assistant-jarvis-jbsk9b
 ## Chat UI
 
 - Tkinter chat window with:
@@ -83,14 +79,6 @@ Behavior:
 4. No planner request is made for these commands.
 
 Persona only affects language tone in planner `say` fields; safety rules and allowlists remain unchanged.
-=======
-## Wake word system
-
-- Wake phrase configurable via `assistant.wake_word_phrase`.
-- On detection: beep, HUD `Listening...`, records 3–7s, then STT.
-- Wake word can be disabled with `assistant.wake_word_enabled: false`.
-- Push-to-talk hotkey (default `F9`) is always available.
->>>>>>> main
 
 ## Confirmation system (critical safety)
 
@@ -105,26 +93,12 @@ Executor blocks finalize actions without a confirmation gate.
 
 - Global hotkey: `F12`
 - Immediately sets STOP_EVENT, aborts execution, cancels confirmation wait.
-<<<<<<< codex/build-advanced-local-voice-assistant-jarvis-jbsk9b
 - UI status updates to `ABORTED` and TTS says `Stopped.`
 
 ## Watermarking
 
 Watermark text comes from `config.yaml` and is shown on the chat UI.
-=======
-- HUD updates to `ABORTED` and TTS says `Stopped.`
 
-<<<<<<< Updated upstream
-## Watermarking
-
-HUD always includes watermark `Arya VL`:
-- bottom-right corner watermark
-- repeating diagonal low-contrast pattern
-- configurable angle/spacing in `config.yaml`
->>>>>>> main
-
-=======
->>>>>>> Stashed changes
 ## Memory
 
 Local persistent memory supports:
