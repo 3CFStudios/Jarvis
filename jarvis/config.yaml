@@ -13,9 +13,7 @@ llm:
   backend: "ollama"
   model: "mistral"
   ollama_url: "http://localhost:11434/api/chat"
-  mistral_api_key_env: "MISTRAL_API_KEY"
-  mistral_api_url: "https://api.mistral.ai/v1/chat/completions"
-  timeout_seconds: 30
+  timeout_seconds: 60   # 30 can be tight if your PC is busy
 
 watermark:
   text: "Arya VL"
@@ -25,7 +23,7 @@ watermark:
   spacing_px: 170
 
 automation:
-  browser: "chromium"
+  browser: "chrome"     # use installed Chrome (Playwright channel)
   headless: false
 
 memory:

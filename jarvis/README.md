@@ -114,6 +114,7 @@ Watermark text comes from `config.yaml` and is shown on the chat UI.
 =======
 - HUD updates to `ABORTED` and TTS says `Stopped.`
 
+<<<<<<< Updated upstream
 ## Watermarking
 
 HUD always includes watermark `Arya VL`:
@@ -122,6 +123,8 @@ HUD always includes watermark `Arya VL`:
 - configurable angle/spacing in `config.yaml`
 >>>>>>> main
 
+=======
+>>>>>>> Stashed changes
 ## Memory
 
 Local persistent memory supports:
